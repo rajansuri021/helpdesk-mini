@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
 import { AppError } from '../middleware/errorHandler';
+import { authenticate } from '../middleware/auth';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -150,6 +151,50 @@ router.post('/login', validateLogin, async (req: Request, res: Response, next: N
       },
       token
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// POST /api/auth/change-password
+router.post('/change-password', authenticate, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = (req as any).user.userId;
+
+    if (!currentPassword || !newPassword) {
+      throw new AppError(400, 'Current password and new password are required', 'VALIDATION_ERROR');
+    }
+
+    if (newPassword.length < 6) {
+      throw new AppError(400, 'New password must be at least 6 characters', 'VALIDATION_ERROR');
+    }
+
+    // Get user
+    const user = await prisma.user.findUnique({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      throw new AppError(404, 'User not found', 'NOT_FOUND');
+    }
+
+    // Verify current password
+    const isValidPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!isValidPassword) {
+      throw new AppError(401, 'Current password is incorrect', 'INVALID_CREDENTIALS');
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword }
+    });
+
+    res.json({ message: 'Password changed successfully' });
   } catch (error) {
     next(error);
   }

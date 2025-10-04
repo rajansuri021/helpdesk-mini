@@ -45,7 +45,7 @@ model Ticket {
 
   // Relations
   creatorId   String
-  creator     User           @relation("TicketCreator", fields: [creatorId], references: [id])
+  creator     User           @relation("TicketCreator", fields: [creatorId], references: [id], onDelete: Cascade)
   
   assigneeId  String?
   assignee    User?          @relation("TicketAssignee", fields: [assigneeId], references: [id])
@@ -73,7 +73,7 @@ model Comment {
   ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@index([ticketId])
   @@index([createdAt])
