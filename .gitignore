@@ -28,7 +28,8 @@ CREDENTIALS.local.md
 Thumbs.db
 
 # Prisma
-prisma/migrations/
+# Note: migrations should be committed to git
+# prisma/migrations/
 
 # Logs
 logs/
