@@ -41,6 +41,20 @@
             }
         }
         
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .spin-animation {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
         @keyframes slideInRight {
             from {
                 opacity: 0;
@@ -407,8 +421,8 @@
                 <div class="mb-6">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-semibold text-lg">🕒 Pending Agent Approvals</h3>
-                        <button onclick="loadPendingAgents()" class="text-blue-600 hover:text-blue-700 text-sm">
-                            🔄 Refresh
+                        <button onclick="refreshWithAnimation('pendingAgentsBtn', loadPendingAgents)" class="text-blue-600 hover:text-blue-700 text-sm">
+                            <span id="pendingAgentsBtn">🔄</span> Refresh
                         </button>
                     </div>
                     <div id="pending-agents-list" class="space-y-2">
@@ -420,8 +434,8 @@
                 <div>
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-semibold text-lg">👥 All Users</h3>
-                        <button onclick="loadAllUsers()" class="text-blue-600 hover:text-blue-700 text-sm">
-                            🔄 Refresh
+                        <button onclick="refreshWithAnimation('allUsersBtn', loadAllUsers)" class="text-blue-600 hover:text-blue-700 text-sm">
+                            <span id="allUsersBtn">🔄</span> Refresh
                         </button>
                     </div>
                     <div id="all-users-list" class="space-y-2">
@@ -1239,6 +1253,20 @@
                 logResponse('POST', '/auth/register', { error: error.message }, 500);
                 alert('Error: ' + error.message);
             }
+        }
+
+        // Refresh with animation
+        function refreshWithAnimation(buttonId, callback) {
+            const icon = document.getElementById(buttonId);
+            icon.classList.add('spin-animation');
+            
+            // Call the actual function
+            callback();
+            
+            // Stop animation after 1 second
+            setTimeout(() => {
+                icon.classList.remove('spin-animation');
+            }, 1000);
         }
 
         // Load Pending Agents (Admin only)
