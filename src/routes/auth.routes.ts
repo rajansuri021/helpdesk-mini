@@ -160,7 +160,7 @@ router.post('/login', validateLogin, async (req: Request, res: Response, next: N
 router.post('/change-password', authenticate, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    const userId = (req as any).user.userId;
+    const userId = (req as any).user.id;
 
     if (!currentPassword || !newPassword) {
       throw new AppError(400, 'Current password and new password are required', 'VALIDATION_ERROR');
