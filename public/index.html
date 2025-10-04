@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpDesk Mini - Modern Ticketing System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Gradient Backgrounds */
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-bg-green {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .gradient-bg-blue {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .gradient-bg-orange {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .animate-slideInRight {
+            animation: slideInRight 0.6s ease-out;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Custom Shadows */
+        .shadow-custom {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .shadow-custom-lg {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Button Effects */
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-gradient:active {
+            transform: translateY(0);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(102, 126, 234, 0.1);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Badge Animations */
+        .badge-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #667eea; /* Fallback color */
+            display: inline-block; /* Fix clipping issue */
+        }
+        
+        /* Fix for gradient text in some browsers */
+        @supports not (background-clip: text) {
+            .gradient-text {
+                color: #667eea;
+                -webkit-text-fill-color: #667eea;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header with Glass Effect -->
+        <div class="glass shadow-custom-lg rounded-2xl p-8 mb-8 animate-fadeInUp">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-5xl font-extrabold mb-3 flex items-center gap-3 text-transparent bg-clip-text" 
+                        style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                               -webkit-background-clip: text;
+                               background-clip: text;">
+                        <span class="animate-pulse-slow text-yellow-500" style="background: none; -webkit-text-fill-color: initial; color: #f59e0b;">🎫</span> 
+                        <span class="inline-block">HelpDesk Mini</span>
+                    </h1>
+                    <p class="text-gray-700 text-lg font-medium">
+                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-bold">
+                            Modern Ticketing System
+                        </span>
+                        <span class="text-gray-500 mx-2">•</span>
+                        <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold">
+                            Problem Statement 3
+                        </span>
+                    </p>
+                </div>
+                <div class="hidden md:flex items-center gap-4">
+                    <div class="text-center px-6 py-3 glass rounded-xl shadow-custom">
+                        <div class="text-3xl font-bold" 
+                             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                    -webkit-background-clip: text; 
+                                    -webkit-text-fill-color: transparent; 
+                                    background-clip: text; 
+                                    display: inline-block;">24/7</div>
+                        <div class="text-xs text-gray-600 font-semibold">Support</div>
+                    </div>
+                    <div class="text-center px-6 py-3 glass rounded-xl shadow-custom">
+                        <div class="text-3xl font-bold" 
+                             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                    -webkit-background-clip: text; 
+                                    -webkit-text-fill-color: transparent; 
+                                    background-clip: text; 
+                                    display: inline-block;">∞</div>
+                        <div class="text-xs text-gray-600 font-semibold">Tickets</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Auth Section -->
+            <div id="auth-section" class="mt-8">
+                <!-- Tabs with Modern Design -->
+                <div class="flex gap-2 mb-6 bg-white/50 p-2 rounded-2xl backdrop-blur-sm">
+                    <button id="tab-login" onclick="showAuthTab('login')" 
+                            class="flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 btn-gradient text-white shadow-lg">
+                        <span class="flex items-center justify-center gap-2">
+                            🔐 Login
+                        </span>
+                    </button>
+                    <button id="tab-register-user" onclick="showAuthTab('register-user')" 
+                            class="flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-gray-600 hover:bg-white/70">
+                        <span class="flex items-center justify-center gap-2">
+                            👤 Register User
+                        </span>
+                    </button>
+                    <button id="tab-register-agent" onclick="showAuthTab('register-agent')" 
+                            class="flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-gray-600 hover:bg-white/70">
+                        <span class="flex items-center justify-center gap-2">
+                            🎧 Register Agent
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form">
+                    <h2 class="text-2xl font-bold gradient-text mb-6 flex items-center gap-2">
+                        <span>🔐</span> Welcome Back
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-1">
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">📧 Email Address</label>
+                            <input type="email" id="login-email" value="admin@helpdesk.com" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">🔒 Password</label>
+                            <input type="password" id="login-password" value="admin123" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div class="flex items-end md:col-span-1">
+                            <button onclick="login()" 
+                                    class="w-full btn-gradient text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover-lift">
+                                <span class="flex items-center justify-center gap-2">
+                                    <span>Login</span>
+                                    <span>→</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <p class="text-sm font-medium text-gray-600 mb-3">Quick Login:</p>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="quickLogin('admin@helpdesk.com', 'admin123')" 
+                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
+                                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                👑 Admin
+                            </button>
+                            <button onclick="quickLogin('agent1@helpdesk.com', 'agent123')" 
+                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
+                                    style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
+                                🎧 Agent 1
+                            </button>
+                            <button onclick="quickLogin('user1@example.com', 'user123')" 
+                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
+                                    style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                                👤 User 1
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register User Form -->
+                <div id="register-user-form" class="hidden animate-fadeInUp">
+                    <h2 class="text-2xl font-bold gradient-text mb-6 flex items-center gap-2">
+                        <span>👤</span> Create User Account
+                    </h2>
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">✨ Full Name</label>
+                            <input type="text" id="reg-user-name" placeholder="Enter your full name" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">📧 Email Address</label>
+                            <input type="email" id="reg-user-email" placeholder="your.email@example.com" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">🔒 Password</label>
+                            <input type="password" id="reg-user-password" placeholder="Minimum 6 characters" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80">
+                            <p class="text-xs text-gray-500 mt-2">Use a strong password with letters, numbers, and symbols</p>
+                        </div>
+                        <button onclick="registerUser()" 
+                                class="w-full text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover-lift transition-all duration-300"
+                                style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <span class="flex items-center justify-center gap-2">
+                                <span>Create Account</span>
+                                <span>✓</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Register Agent Form -->
+                <div id="register-agent-form" class="hidden animate-fadeInUp">
+                    <h2 class="text-2xl font-bold gradient-text mb-6 flex items-center gap-2">
+                        <span>🎧</span> Join as Support Agent
+                    </h2>
+                    <div class="glass border-2 border-yellow-300 rounded-2xl p-6 mb-6 shadow-custom">
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl animate-pulse-slow">⚠️</div>
+                            <div>
+                                <h3 class="font-bold text-yellow-800 mb-2">Admin Approval Required</h3>
+                                <p class="text-sm text-yellow-700">
+                                    Agent accounts must be approved by an administrator before you can login and access the system.
+                                    You'll receive confirmation once your application is reviewed.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">✨ Full Name</label>
+                            <input type="text" id="reg-agent-name" placeholder="Enter your full name" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">📧 Professional Email</label>
+                            <input type="email" id="reg-agent-email" placeholder="agent@company.com" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/80">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-3 text-gray-700">🔒 Secure Password</label>
+                            <input type="password" id="reg-agent-password" placeholder="Minimum 6 characters" 
+                                   class="w-full px-5 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/80">
+                            <p class="text-xs text-gray-500 mt-2">Create a strong password to protect your agent account</p>
+                        </div>
+                        <button onclick="registerAgent()" 
+                                class="w-full text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover-lift transition-all duration-300"
+                                style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                            <span class="flex items-center justify-center gap-2">
+                                <span>Submit Application</span>
+                                <span>→</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="user-info" class="mt-6 hidden animate-slideInRight">
+                <div class="glass border-2 border-green-300 rounded-2xl p-6 shadow-custom-lg">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg"
+                                 style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                                👤
+                            </div>
+                            <div>
+                                <p class="text-lg font-bold text-gray-800">
+                                    <span id="user-name" class="gradient-text"></span>
+                                </p>
+                                <p class="text-sm text-gray-600 flex items-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold shadow-sm"
+                                          id="user-role-badge"
+                                          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                        <span id="user-role"></span>
+                                    </span>
+                                    <span>• Active</span>
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="logout()" 
+                                class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover-lift shadow-custom"
+                                style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
+                            <span class="flex items-center gap-2">
+                                <span>Logout</span>
+                                <span>→</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="hidden">
+            <!-- Role Info Banner -->
+            <div id="role-info-banner" class="mb-6"></div>
+            
+            <!-- Admin Panel (Only for ADMIN role) -->
+            <div id="admin-panel" class="bg-white shadow rounded-lg p-6 mb-6 hidden">
+                <h2 class="text-xl font-semibold mb-4">👑 Admin Panel</h2>
+                
+                <!-- Pending Agent Approvals -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">🕒 Pending Agent Approvals</h3>
+                        <button onclick="loadPendingAgents()" class="text-blue-600 hover:text-blue-700 text-sm">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    <div id="pending-agents-list" class="space-y-2">
+                        <p class="text-gray-500 text-sm">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- All Users -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">👥 All Users</h3>
+                        <button onclick="loadAllUsers()" class="text-blue-600 hover:text-blue-700 text-sm">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    <div id="all-users-list" class="space-y-2">
+                        <p class="text-gray-500 text-sm">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Create Ticket (Only for USER role) -->
+            <div id="create-ticket-section" class="glass shadow-custom-lg rounded-2xl p-8 mb-8 hidden border-2 border-blue-200 animate-fadeInUp">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-lg"
+                         style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        ✍️
+                    </div>
+                    <h2 class="text-3xl font-bold gradient-text">Create New Ticket</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-700">📝 Title</label>
+                        <input type="text" id="ticket-title" placeholder="What's the issue? (e.g., Cannot login to my account)"
+                               class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80 text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-700">💬 Description</label>
+                        <textarea id="ticket-description" rows="4" placeholder="Provide detailed information about your issue..."
+                                  class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80 resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-3 text-gray-700">⚡ Priority Level</label>
+                        <select id="ticket-priority" class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/80 text-lg font-medium">
+                            <option value="LOW">🟢 Low - Minor issue, no rush</option>
+                            <option value="MEDIUM" selected>🟡 Medium - Moderate impact</option>
+                            <option value="HIGH">🟠 High - Significant problem</option>
+                            <option value="CRITICAL">🔴 Critical - System down!</option>
+                        </select>
+                    </div>
+                    <button onclick="createTicket()" 
+                            class="w-full text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover-lift transition-all duration-300"
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span class="flex items-center justify-center gap-2">
+                            <span>🚀 Submit Ticket</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="glass shadow-custom-lg rounded-2xl p-6 mb-8 border-2 border-purple-200 animate-fadeInUp">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-2xl">🔍</span>
+                    <h2 class="text-2xl font-bold gradient-text">Filter & Search</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-gray-700">📊 Status</label>
+                        <select id="filter-status" onchange="loadTickets()" 
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80 font-medium">
+                            <option value="">All Statuses</option>
+                            <option value="OPEN">🟡 Open</option>
+                            <option value="IN_PROGRESS">🔵 In Progress</option>
+                            <option value="RESOLVED">🟢 Resolved</option>
+                            <option value="CLOSED">⚫ Closed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-gray-700">⚡ Priority</label>
+                        <select id="filter-priority" onchange="loadTickets()" 
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80 font-medium">
+                            <option value="">All Priorities</option>
+                            <option value="LOW">🟢 Low</option>
+                            <option value="MEDIUM">🟡 Medium</option>
+                            <option value="HIGH">🟠 High</option>
+                            <option value="CRITICAL">🔴 Critical</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-gray-700">⏰ SLA Status</label>
+                        <select id="filter-sla" onchange="loadTickets()" 
+                                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80 font-medium">
+                            <option value="">All SLA</option>
+                            <option value="true">⚠️ Breached</option>
+                            <option value="false">✅ On Time</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-gray-700">🔎 Search</label>
+                        <input type="text" id="filter-search" placeholder="Search tickets..." onkeyup="if(event.key==='Enter')loadTickets()"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/80">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tickets List -->
+            <div class="glass shadow-custom-lg rounded-2xl p-8 border-2 border-indigo-200 animate-fadeInUp">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🎫</span>
+                        <h2 class="text-3xl font-bold gradient-text">All Tickets</h2>
+                    </div>
+                    <button onclick="loadTickets()" 
+                            class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover-lift shadow-custom text-white"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span class="flex items-center gap-2">
+                            <span>🔄</span>
+                            <span>Refresh</span>
+                        </span>
+                    </button>
+                </div>
+                <div id="tickets-list" class="space-y-4">
+                    <!-- Tickets will be loaded here -->
+                    <div class="text-center py-12">
+                        <div class="spinner mx-auto mb-4"></div>
+                        <p class="text-gray-500">Loading tickets...</p>
+                    </div>
+                </div>
+                <div id="pagination" class="mt-8 flex justify-between items-center">
+                    <button id="prev-btn" onclick="prevPage()" 
+                            class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-custom"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        ← Previous
+                    </button>
+                    <span id="page-info" class="text-gray-700 font-semibold px-6 py-3 glass rounded-xl"></span>
+                    <button id="next-btn" onclick="nextPage()" 
+                            class="px-6 py-3 rounded-xl font-semibold transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-custom"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        Next →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Response Log -->
+        <div class="glass shadow-custom-lg rounded-2xl p-8 mt-8 border-2 border-green-200">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">📡</span>
+                    <h2 class="text-2xl font-bold gradient-text">API Response Log</h2>
+                </div>
+                <button onclick="clearLog()" 
+                        class="px-5 py-2 rounded-xl font-semibold transition-all duration-300 hover-lift shadow-custom text-white"
+                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <span class="flex items-center gap-2">
+                        <span>🗑️</span>
+                        <span>Clear Log</span>
+                    </span>
+                </button>
+            </div>
+            <div id="response-log" class="bg-gradient-to-br from-gray-900 to-gray-800 text-green-400 p-6 rounded-xl h-96 overflow-y-auto font-mono text-xs shadow-inner border-2 border-gray-700">
+                <p class="text-gray-500 text-center py-8">API responses will appear here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let token = null;
+        let currentUser = null;
+        let currentOffset = 0;
+        const pageLimit = 10;
+        let totalTickets = 0;
+
+        function logResponse(method, endpoint, response, statusCode = 200) {
+            const log = document.getElementById('response-log');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            // Color code based on status
+            const statusColor = statusCode >= 400 ? '#ef4444' : statusCode >= 200 && statusCode < 300 ? '#10b981' : '#f59e0b';
+            
+            // Format the response nicely
+            const formattedResponse = typeof response === 'object' 
+                ? JSON.stringify(response, null, 2) 
+                : response;
+            
+            const entry = document.createElement('div');
+            entry.className = 'mb-4 pb-4 border-b border-gray-700';
+            entry.innerHTML = `
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-gray-400">[${timestamp}]</span>
+                    <span class="px-2 py-1 rounded text-xs font-bold" style="background-color: ${statusColor}20; color: ${statusColor}">
+                        ${method}
+                    </span>
+                    <span class="text-blue-400">${endpoint}</span>
+                    <span class="px-2 py-1 rounded text-xs" style="background-color: ${statusColor}20; color: ${statusColor}">
+                        ${statusCode}
+                    </span>
+                </div>
+                <pre class="text-green-300 text-xs overflow-x-auto whitespace-pre-wrap">${formattedResponse}</pre>
+            `;
+            
+            // Add to top of log
+            const firstChild = log.firstChild;
+            if (firstChild && firstChild.tagName !== 'P') {
+                log.insertBefore(entry, firstChild);
+            } else {
+                log.innerHTML = '';
+                log.appendChild(entry);
+            }
+            
+            // Keep only last 10 entries
+            while (log.children.length > 10) {
+                log.removeChild(log.lastChild);
+            }
+        }
+        
+        function clearLog() {
+            document.getElementById('response-log').innerHTML = '<p class="text-gray-500">Log cleared. API responses will appear here...</p>';
+        }
+
+        async function quickLogin(email, password) {
+            document.getElementById('login-email').value = email;
+            document.getElementById('login-password').value = password;
+            await login();
+        }
+
+        async function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                logResponse('POST', '/auth/login', data, response.status);
+
+                if (response.ok) {
+                    token = data.token;
+                    currentUser = data.user;
+                    
+                    document.getElementById('user-name').textContent = data.user.name;
+                    document.getElementById('user-role').textContent = data.user.role;
+                    document.getElementById('auth-section').classList.add('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('main-content').classList.remove('hidden');
+                    
+                    // Show role-specific banner and features
+                    const roleBanner = document.getElementById('role-info-banner');
+                    if (data.user.role === 'USER') {
+                        document.getElementById('create-ticket-section').classList.remove('hidden');
+                        roleBanner.innerHTML = `
+                            <div class="glass border-2 border-blue-300 rounded-2xl p-6 shadow-custom-lg animate-fadeInUp">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-lg"
+                                         style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                        👤
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-2xl font-bold gradient-text mb-2">User Dashboard</h3>
+                                        <p class="text-gray-700 leading-relaxed">Create tickets for your issues, track their progress, and communicate with our support team through comments.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (data.user.role === 'AGENT') {
+                        document.getElementById('create-ticket-section').classList.add('hidden');
+                        roleBanner.innerHTML = `
+                            <div class="glass border-2 border-green-300 rounded-2xl p-6 shadow-custom-lg animate-fadeInUp">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-lg"
+                                         style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                                        🎧
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-2xl font-bold gradient-text mb-2">Agent Dashboard</h3>
+                                        <p class="text-gray-700 leading-relaxed">View all tickets, assign them to yourself, update status, resolve customer issues, and maintain SLA compliance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (data.user.role === 'ADMIN') {
+                        document.getElementById('create-ticket-section').classList.add('hidden');
+                        document.getElementById('admin-panel').classList.remove('hidden');
+                        roleBanner.innerHTML = `
+                            <div class="glass border-2 border-purple-300 rounded-2xl p-6 shadow-custom-lg animate-fadeInUp">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shadow-lg"
+                                         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                        👑
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-2xl font-bold gradient-text mb-2">Admin Dashboard</h3>
+                                        <p class="text-gray-700 leading-relaxed">Full system control: Manage users, approve agents, assign/reassign tickets, monitor SLA breaches, and handle critical escalations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        loadPendingAgents();
+                        loadAllUsers();
+                    }
+                    
+                    loadTickets();
+                } else {
+                    alert('Login failed: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', '/auth/login', { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function logout() {
+            token = null;
+            currentUser = null;
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('main-content').classList.add('hidden');
+            document.getElementById('create-ticket-section').classList.add('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            showAuthTab('login'); // Reset to login tab
+        }
+
+        async function createTicket() {
+            const title = document.getElementById('ticket-title').value;
+            const description = document.getElementById('ticket-description').value;
+            const priority = document.getElementById('ticket-priority').value;
+
+            if (!title || !description) {
+                alert('Please fill in title and description');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/tickets`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'Idempotency-Key': `ticket-${Date.now()}`
+                    },
+                    body: JSON.stringify({ title, description, priority })
+                });
+
+                const data = await response.json();
+                logResponse('POST', '/tickets', data, response.status);
+
+                if (response.ok) {
+                    alert('Ticket created successfully!');
+                    document.getElementById('ticket-title').value = '';
+                    document.getElementById('ticket-description').value = '';
+                    loadTickets();
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', '/tickets', { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function loadTickets() {
+            const status = document.getElementById('filter-status').value;
+            const priority = document.getElementById('filter-priority').value;
+            const sla = document.getElementById('filter-sla').value;
+            const search = document.getElementById('filter-search').value;
+
+            const params = new URLSearchParams({
+                limit: pageLimit,
+                offset: currentOffset
+            });
+            
+            if (status) params.append('status', status);
+            if (priority) params.append('priority', priority);
+            if (sla) params.append('slaBreached', sla);
+            if (search) params.append('q', search);
+
+            try {
+                const response = await fetch(`${API_BASE}/tickets?${params}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('GET', '/tickets?' + params.toString(), data, response.status);
+
+                if (response.ok) {
+                    totalTickets = data.total;
+                    renderTickets(data.items);
+                    updatePagination(data);
+                }
+            } catch (error) {
+                logResponse('GET', '/tickets', { error: error.message }, 500);
+                alert('Error loading tickets: ' + error.message);
+            }
+        }
+
+        function renderTickets(tickets) {
+            const container = document.getElementById('tickets-list');
+            
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <div class="text-6xl mb-4">📭</div>
+                        <p class="text-gray-500 text-lg font-medium">No tickets found</p>
+                        <p class="text-gray-400 text-sm mt-2">Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = tickets.map((ticket, index) => `
+                <div class="glass border-2 ${ticket.slaBreached ? 'border-red-300' : 'border-gray-200'} rounded-2xl p-6 hover-lift cursor-pointer transition-all duration-300 animate-fadeInUp" 
+                     style="animation-delay: ${index * 0.1}s" 
+                     onclick="viewTicket('${ticket.id}')">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-xl text-gray-800 mb-2">${ticket.title}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">${ticket.description.substring(0, 120)}${ticket.description.length > 120 ? '...' : ''}</p>
+                        </div>
+                        <div class="flex flex-col gap-2 ml-4">
+                            ${getPriorityBadge(ticket.priority)}
+                            ${getStatusBadge(ticket.status)}
+                            ${ticket.slaBreached ? '<span class="px-3 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg animate-pulse-slow">⚠️ SLA BREACH</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200 flex flex-wrap gap-4 text-sm">
+                        <span class="flex items-center gap-2 font-medium">
+                            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xs">
+                                ${ticket.creator.name.charAt(0).toUpperCase()}
+                            </span>
+                            <span class="text-gray-700">${ticket.creator.name}</span>
+                        </span>
+                        ${ticket.assignee ? `
+                            <span class="flex items-center gap-2 font-medium">
+                                <span class="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white text-xs">
+                                    ${ticket.assignee.name.charAt(0).toUpperCase()}
+                                </span>
+                                <span class="text-gray-700">${ticket.assignee.name}</span>
+                            </span>
+                        ` : '<span class="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">🎧 Unassigned</span>'}
+                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">💬 ${ticket._count.comments} ${ticket._count.comments === 1 ? 'comment' : 'comments'}</span>
+                        <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">📅 ${new Date(ticket.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getPriorityBadge(priority) {
+            const badges = {
+                'LOW': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #3b3b3b;">🟢 LOW</span>',
+                'MEDIUM': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); color: #3b3b3b;">🟡 MEDIUM</span>',
+                'HIGH': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">🟠 HIGH</span>',
+                'CRITICAL': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-lg animate-pulse-slow" style="background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); color: white;">🔴 CRITICAL</span>'
+            };
+            return badges[priority] || badges['MEDIUM'];
+        }
+        
+        function getStatusBadge(status) {
+            const badges = {
+                'OPEN': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); color: #3b3b3b;">🟡 OPEN</span>',
+                'IN_PROGRESS': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white;">🔵 IN PROGRESS</span>',
+                'RESOLVED': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #55efc4 0%, #00b894 100%); color: white;">🟢 RESOLVED</span>',
+                'CLOSED': '<span class="px-3 py-1 text-xs font-bold rounded-full shadow-sm" style="background: linear-gradient(135deg, #b2bec3 0%, #636e72 100%); color: white;">⚫ CLOSED</span>'
+            };
+            return badges[status] || badges['OPEN'];
+        }
+
+        function updatePagination(data) {
+            document.getElementById('page-info').textContent = 
+                `Showing ${currentOffset + 1}-${Math.min(currentOffset + pageLimit, totalTickets)} of ${totalTickets}`;
+            
+            document.getElementById('prev-btn').disabled = currentOffset === 0;
+            document.getElementById('next-btn').disabled = !data.next_offset;
+        }
+
+        function nextPage() {
+            currentOffset += pageLimit;
+            loadTickets();
+        }
+
+        function prevPage() {
+            currentOffset = Math.max(0, currentOffset - pageLimit);
+            loadTickets();
+        }
+
+        async function viewTicket(ticketId) {
+            try {
+                const response = await fetch(`${API_BASE}/tickets/${ticketId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('GET', `/tickets/${ticketId}`, data, response.status);
+
+                if (response.ok) {
+                    // Show ticket details in a formatted way
+                    showTicketModal(data);
+                }
+            } catch (error) {
+                logResponse('GET', `/tickets/${ticketId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function showTicketModal(ticket) {
+            const canManageTicket = currentUser.role === 'AGENT' || currentUser.role === 'ADMIN';
+            
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+            
+            modal.innerHTML = `
+                <div class="glass rounded-3xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto shadow-custom-lg border-2 border-purple-200 animate-fadeInUp" onclick="event.stopPropagation()">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex-1">
+                            <h2 class="text-3xl font-bold gradient-text mb-2">${ticket.title}</h2>
+                            <div class="flex gap-2">
+                                ${getPriorityBadge(ticket.priority)}
+                                ${getStatusBadge(ticket.status)}
+                            </div>
+                        </div>
+                        <button onclick="this.closest('.fixed').remove()" 
+                                class="w-10 h-10 rounded-full hover-lift transition-all duration-300 flex items-center justify-center text-white text-2xl shadow-lg"
+                                style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            ×
+                        </button>
+                    </div>
+                    
+                    <p class="text-gray-700 text-lg mb-6 leading-relaxed bg-white/50 p-4 rounded-xl">${ticket.description}</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6 p-6 glass rounded-2xl border-2 border-gray-200">
+                        <div><strong>Status:</strong> <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(ticket.status)}">${ticket.status}</span></div>
+                        <div><strong>Priority:</strong> <span class="px-2 py-1 text-xs rounded-full ${getPriorityColor(ticket.priority)}">${ticket.priority}</span></div>
+                        <div><strong>Creator:</strong> ${ticket.creator.name}</div>
+                        <div><strong>Assignee:</strong> ${ticket.assignee ? ticket.assignee.name : 'Unassigned'}</div>
+                        <div><strong>Created:</strong> ${new Date(ticket.createdAt).toLocaleString()}</div>
+                        <div><strong>Version:</strong> ${ticket.version}</div>
+                    </div>
+                    
+                    ${canManageTicket ? `
+                        <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <h3 class="font-semibold mb-3">🎧 Agent/Admin Controls</h3>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Status</label>
+                                    <select id="modal-status" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                        <option value="OPEN" ${ticket.status === 'OPEN' ? 'selected' : ''}>Open</option>
+                                        <option value="IN_PROGRESS" ${ticket.status === 'IN_PROGRESS' ? 'selected' : ''}>In Progress</option>
+                                        <option value="RESOLVED" ${ticket.status === 'RESOLVED' ? 'selected' : ''}>Resolved</option>
+                                        <option value="CLOSED" ${ticket.status === 'CLOSED' ? 'selected' : ''}>Closed</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Priority</label>
+                                    <select id="modal-priority" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                        <option value="LOW" ${ticket.priority === 'LOW' ? 'selected' : ''}>Low</option>
+                                        <option value="MEDIUM" ${ticket.priority === 'MEDIUM' ? 'selected' : ''}>Medium</option>
+                                        <option value="HIGH" ${ticket.priority === 'HIGH' ? 'selected' : ''}>High</option>
+                                        <option value="CRITICAL" ${ticket.priority === 'CRITICAL' ? 'selected' : ''}>Critical</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-end">
+                                    <button onclick="updateTicketStatus('${ticket.id}', ${ticket.version})" 
+                                            class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm">
+                                        Update Ticket
+                                    </button>
+                                </div>
+                            </div>
+                            ${!ticket.assignee ? `
+                                <button onclick="assignTicketToMe('${ticket.id}', ${ticket.version})" 
+                                        class="mt-3 w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 text-sm">
+                                    🎯 Assign to Me
+                                </button>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="border-t pt-4">
+                        <h3 class="font-semibold mb-3">💬 Comments (${ticket.comments.length})</h3>
+                        <div class="space-y-3 mb-4 max-h-60 overflow-y-auto">
+                            ${ticket.comments.length > 0 ? ticket.comments.map(c => `
+                                <div class="border-l-4 border-blue-500 pl-3 py-2 bg-gray-50 rounded">
+                                    <div class="flex justify-between items-start">
+                                        <span class="font-semibold text-sm">${c.author.name}</span>
+                                        <span class="text-xs text-gray-500">${new Date(c.createdAt).toLocaleString()}</span>
+                                    </div>
+                                    <p class="text-gray-700 mt-1">${c.content}</p>
+                                </div>
+                            `).join('') : '<p class="text-gray-500 text-sm">No comments yet</p>'}
+                        </div>
+                        
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium mb-2">Add Comment</label>
+                            <textarea id="modal-comment" rows="3" placeholder="Write your comment here..." 
+                                      class="w-full px-3 py-2 border rounded-lg"></textarea>
+                            <button onclick="addComment('${ticket.id}')" 
+                                    class="mt-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                                Post Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        async function addComment(ticketId) {
+            const commentText = document.getElementById('modal-comment').value.trim();
+            
+            if (!commentText) {
+                alert('Please enter a comment');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/tickets/${ticketId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content: commentText })
+                });
+                
+                const data = await response.json();
+                logResponse('POST', `/tickets/${ticketId}/comments`, data, response.status);
+                
+                if (response.ok) {
+                    alert('Comment added successfully!');
+                    document.querySelector('.fixed').remove(); // Close modal
+                    viewTicket(ticketId); // Reopen with updated data
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', `/tickets/${ticketId}/comments`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function updateTicketStatus(ticketId, currentVersion) {
+            const newStatus = document.getElementById('modal-status').value;
+            const newPriority = document.getElementById('modal-priority').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/tickets/${ticketId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        status: newStatus,
+                        priority: newPriority,
+                        version: currentVersion
+                    })
+                });
+                
+                const data = await response.json();
+                logResponse('PATCH', `/tickets/${ticketId}`, data, response.status);
+                
+                if (response.ok) {
+                    alert('Ticket updated successfully!');
+                    document.querySelector('.fixed').remove(); // Close modal
+                    loadTickets(); // Refresh list
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('PATCH', `/tickets/${ticketId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        async function assignTicketToMe(ticketId, currentVersion) {
+            try {
+                const response = await fetch(`${API_BASE}/tickets/${ticketId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        assigneeId: currentUser.id,
+                        status: 'IN_PROGRESS',
+                        version: currentVersion
+                    })
+                });
+                
+                const data = await response.json();
+                logResponse('PATCH', `/tickets/${ticketId}`, data, response.status);
+                
+                if (response.ok) {
+                    alert('Ticket assigned to you and status changed to IN_PROGRESS!');
+                    document.querySelector('.fixed').remove(); // Close modal
+                    loadTickets(); // Refresh list
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('PATCH', `/tickets/${ticketId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function getPriorityColor(priority) {
+            const colors = {
+                'LOW': 'bg-gray-100 text-gray-700',
+                'MEDIUM': 'bg-blue-100 text-blue-700',
+                'HIGH': 'bg-orange-100 text-orange-700',
+                'CRITICAL': 'bg-red-100 text-red-700'
+            };
+            return colors[priority] || 'bg-gray-100 text-gray-700';
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'OPEN': 'bg-yellow-100 text-yellow-700',
+                'IN_PROGRESS': 'bg-blue-100 text-blue-700',
+                'RESOLVED': 'bg-green-100 text-green-700',
+                'CLOSED': 'bg-gray-100 text-gray-700'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-700';
+        }
+
+        // Auth Tab Switching with Modern Styling
+        function showAuthTab(tab) {
+            // Hide all forms
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-user-form').classList.add('hidden');
+            document.getElementById('register-agent-form').classList.add('hidden');
+            
+            // Reset all tab styles
+            const inactiveClass = 'flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-gray-600 hover:bg-white/70';
+            const activeClass = 'flex-1 px-6 py-3 rounded-xl font-semibold transition-all duration-300 btn-gradient text-white shadow-lg';
+            
+            document.getElementById('tab-login').className = inactiveClass;
+            document.getElementById('tab-register-user').className = inactiveClass;
+            document.getElementById('tab-register-agent').className = inactiveClass;
+            
+            // Show selected form and activate tab
+            if (tab === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('tab-login').className = activeClass;
+            } else if (tab === 'register-user') {
+                document.getElementById('register-user-form').classList.remove('hidden');
+                document.getElementById('tab-register-user').className = activeClass;
+            } else if (tab === 'register-agent') {
+                document.getElementById('register-agent-form').classList.remove('hidden');
+                document.getElementById('tab-register-agent').className = activeClass;
+            }
+        }
+
+        // Register User
+        async function registerUser() {
+            const name = document.getElementById('reg-user-name').value;
+            const email = document.getElementById('reg-user-email').value;
+            const password = document.getElementById('reg-user-password').value;
+
+            if (!name || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role: 'USER' })
+                });
+
+                const data = await response.json();
+                logResponse('POST', '/auth/register', data, response.status);
+
+                if (response.ok) {
+                    alert('Registration successful! You can now login.');
+                    showAuthTab('login');
+                    document.getElementById('login-email').value = email;
+                } else {
+                    alert('Registration failed: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', '/auth/register', { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Register Agent
+        async function registerAgent() {
+            const name = document.getElementById('reg-agent-name').value;
+            const email = document.getElementById('reg-agent-email').value;
+            const password = document.getElementById('reg-agent-password').value;
+
+            if (!name || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role: 'AGENT' })
+                });
+
+                const data = await response.json();
+                logResponse('POST', '/auth/register', data, response.status);
+
+                if (response.ok || response.status === 201) {
+                    alert('Agent registration submitted! Your account is pending admin approval. You will be able to login after approval.');
+                    showAuthTab('login');
+                } else {
+                    alert('Registration failed: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', '/auth/register', { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Load Pending Agents (Admin only)
+        async function loadPendingAgents() {
+            try {
+                const response = await fetch(`${API_BASE}/admin/pending-agents`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('GET', '/admin/pending-agents', data, response.status);
+
+                const container = document.getElementById('pending-agents-list');
+                
+                if (response.ok) {
+                    if (data.pending_agents.length === 0) {
+                        container.innerHTML = '<p class="text-gray-500 text-sm">No pending agent approvals</p>';
+                    } else {
+                        container.innerHTML = data.pending_agents.map(agent => `
+                            <div class="border rounded-lg p-3 bg-yellow-50">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-semibold">${agent.name}</p>
+                                        <p class="text-sm text-gray-600">${agent.email}</p>
+                                        <p class="text-xs text-gray-500">Registered: ${new Date(agent.createdAt).toLocaleDateString()}</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="approveAgent('${agent.id}')" 
+                                                class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm">
+                                            ✓ Approve
+                                        </button>
+                                        <button onclick="rejectAgent('${agent.id}')" 
+                                                class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm">
+                                            ✗ Reject
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (error) {
+                logResponse('GET', '/admin/pending-agents', { error: error.message }, 500);
+            }
+        }
+
+        // Approve Agent
+        async function approveAgent(userId) {
+            if (!confirm('Approve this agent?')) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/approve-agent/${userId}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('POST', `/admin/approve-agent/${userId}`, data, response.status);
+
+                if (response.ok) {
+                    alert('Agent approved successfully!');
+                    loadPendingAgents();
+                    loadAllUsers();
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', `/admin/approve-agent/${userId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Reject Agent
+        async function rejectAgent(userId) {
+            if (!confirm('Reject this agent application? This will delete the account.')) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/reject-agent/${userId}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('POST', `/admin/reject-agent/${userId}`, data, response.status);
+
+                if (response.ok) {
+                    alert('Agent application rejected');
+                    loadPendingAgents();
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('POST', `/admin/reject-agent/${userId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Load All Users (Admin only)
+        async function loadAllUsers() {
+            try {
+                const response = await fetch(`${API_BASE}/admin/users`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('GET', '/admin/users', data, response.status);
+
+                const container = document.getElementById('all-users-list');
+                
+                if (response.ok) {
+                    container.innerHTML = data.users.map(user => `
+                        <div class="border rounded-lg p-3 ${!user.isApproved ? 'bg-yellow-50' : ''}">
+                            <div class="flex justify-between items-center">
+                                <div class="flex-1">
+                                    <p class="font-semibold">${user.name} 
+                                        <span class="px-2 py-1 text-xs rounded-full ${
+                                            user.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' :
+                                            user.role === 'AGENT' ? 'bg-green-100 text-green-700' :
+                                            'bg-blue-100 text-blue-700'
+                                        }">${user.role}</span>
+                                        ${!user.isApproved ? '<span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">Pending</span>' : ''}
+                                    </p>
+                                    <p class="text-sm text-gray-600">${user.email}</p>
+                                    <p class="text-xs text-gray-500">
+                                        Tickets Created: ${user._count.ticketsCreated} | 
+                                        Assigned: ${user._count.ticketsAssigned} | 
+                                        Comments: ${user._count.comments}
+                                    </p>
+                                </div>
+                                ${user.role !== 'ADMIN' ? `
+                                    <button onclick="deleteUser('${user.id}')" 
+                                            class="bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200 text-sm">
+                                        Delete
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                logResponse('GET', '/admin/users', { error: error.message }, 500);
+            }
+        }
+
+        // Delete User (Admin only)
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user? This cannot be undone.')) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                const data = await response.json();
+                logResponse('DELETE', `/admin/users/${userId}`, data, response.status);
+
+                if (response.ok) {
+                    alert('User deleted successfully');
+                    loadAllUsers();
+                } else {
+                    alert('Error: ' + data.error.message);
+                }
+            } catch (error) {
+                logResponse('DELETE', `/admin/users/${userId}`, { error: error.message }, 500);
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

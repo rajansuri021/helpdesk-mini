@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  name       String
+  role       String   @default("USER")
+  isApproved Boolean  @default(true)  // Agents need admin approval, users auto-approved
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  ticketsCreated  Ticket[]         @relation("TicketCreator")
+  ticketsAssigned Ticket[]         @relation("TicketAssignee")
+  comments        Comment[]
+  timelineEvents  TicketTimeline[]
+
+  @@map("users")
+}
+
+model Ticket {
+  id          String         @id @default(uuid())
+  title       String
+  description String
+  status      String         @default("OPEN")
+  priority    String         @default("MEDIUM")
+  version     Int            @default(1) // For optimistic locking
+  
+  // SLA tracking
+  slaDeadline DateTime?
+  slaBreached Boolean        @default(false)
+  resolvedAt  DateTime?
+  closedAt    DateTime?
+  
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  creatorId   String
+  creator     User           @relation("TicketCreator", fields: [creatorId], references: [id])
+  
+  assigneeId  String?
+  assignee    User?          @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  
+  comments    Comment[]
+  timeline    TicketTimeline[]
+
+  @@index([status])
+  @@index([priority])
+  @@index([creatorId])
+  @@index([assigneeId])
+  @@index([slaBreached])
+  @@index([createdAt])
+  @@map("tickets")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+
+  @@index([ticketId])
+  @@index([createdAt])
+  @@map("comments")
+}
+
+model TicketTimeline {
+  id        String         @id @default(uuid())
+  action    String
+  oldValue  String?
+  newValue  String?
+  metadata  String? // JSON string for additional data
+  createdAt DateTime       @default(now())
+
+  // Relations
+  ticketId  String
+  ticket    Ticket         @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  
+  userId    String?
+  user      User?          @relation(fields: [userId], references: [id])
+
+  @@index([ticketId])
+  @@index([createdAt])
+  @@map("ticket_timeline")
+}
+
+model IdempotencyKey {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  response  String // JSON string
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([expiresAt])
+  @@map("idempotency_keys")
+}
