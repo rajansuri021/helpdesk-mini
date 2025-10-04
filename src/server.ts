@@ -21,17 +21,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (frontend)
-app.use(express.static('public'));
-
 // Rate limiter setup
 setupRateLimiter(app);
 
-// Routes
+// API Routes - MUST come before static files
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api', healthRoutes);
+
+// Serve static files (frontend) - comes AFTER API routes
+app.use(express.static('public'));
 
 // Serve hackathon manifest
 app.get('/.well-known/hackathon.json', (req, res) => {
