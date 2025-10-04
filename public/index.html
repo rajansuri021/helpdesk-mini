@@ -263,26 +263,6 @@
                             </button>
                         </div>
                     </div>
-                    <div class="mt-6">
-                        <p class="text-sm font-medium text-gray-600 mb-3">Quick Login:</p>
-                        <div class="flex gap-3 flex-wrap">
-                            <button onclick="quickLogin('admin@helpdesk.com', 'admin123')" 
-                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
-                                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                👑 Admin
-                            </button>
-                            <button onclick="quickLogin('agent1@helpdesk.com', 'agent123')" 
-                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
-                                    style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
-                                🎧 Agent 1
-                            </button>
-                            <button onclick="quickLogin('user1@example.com', 'user123')" 
-                                    class="px-5 py-2 rounded-xl font-medium transition-all duration-300 hover-lift shadow-custom" 
-                                    style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
-                                👤 User 1
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Register User Form -->
@@ -634,12 +614,6 @@
         
         function clearLog() {
             document.getElementById('response-log').innerHTML = '<p class="text-gray-500">Log cleared. API responses will appear here...</p>';
-        }
-
-        async function quickLogin(email, password) {
-            document.getElementById('login-email').value = email;
-            document.getElementById('login-password').value = password;
-            await login();
         }
 
         async function login() {
