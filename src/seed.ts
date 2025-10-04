@@ -308,24 +308,7 @@ async function seed() {
     console.log('✅ Tickets created');
 
     console.log('\n🎉 Seed completed successfully!');
-    console.log('\n📝 Test Credentials:');
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('\n👤 Admin:');
-    console.log('   Email: admin@helpdesk.com');
-    console.log('   Password: admin123');
-    console.log('\n🎧 Agent 1:');
-    console.log('   Email: agent1@helpdesk.com');
-    console.log('   Password: agent123');
-    console.log('\n🎧 Agent 2:');
-    console.log('   Email: agent2@helpdesk.com');
-    console.log('   Password: agent123');
-    console.log('\n👥 User 1:');
-    console.log('   Email: user1@example.com');
-    console.log('   Password: user123');
-    console.log('\n👥 User 2:');
-    console.log('   Email: user2@example.com');
-    console.log('   Password: user123');
-    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+    console.log('📝 Demo accounts created for testing\n');
 
   } catch (error) {
     console.error('❌ Seed failed:', error);
