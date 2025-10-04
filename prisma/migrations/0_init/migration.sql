@@ -4,7 +4,8 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'USER',
+    "isApproved" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -16,12 +17,17 @@ CREATE TABLE "tickets" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'open',
-    "priority" TEXT NOT NULL DEFAULT 'medium',
-    "customerId" TEXT NOT NULL,
-    "assignedTo" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'OPEN',
+    "priority" TEXT NOT NULL DEFAULT 'MEDIUM',
+    "version" INTEGER NOT NULL DEFAULT 1,
+    "slaDeadline" TIMESTAMP(3),
+    "slaBreached" BOOLEAN NOT NULL DEFAULT false,
+    "resolvedAt" TIMESTAMP(3),
+    "closedAt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "creatorId" TEXT NOT NULL,
+    "assigneeId" TEXT,
 
     CONSTRAINT "tickets_pkey" PRIMARY KEY ("id")
 );
@@ -62,13 +68,19 @@ CREATE TABLE "idempotency_keys" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE INDEX "tickets_customerId_idx" ON "tickets"("customerId");
-
--- CreateIndex
-CREATE INDEX "tickets_assignedTo_idx" ON "tickets"("assignedTo");
-
--- CreateIndex
 CREATE INDEX "tickets_status_idx" ON "tickets"("status");
+
+-- CreateIndex
+CREATE INDEX "tickets_priority_idx" ON "tickets"("priority");
+
+-- CreateIndex
+CREATE INDEX "tickets_creatorId_idx" ON "tickets"("creatorId");
+
+-- CreateIndex
+CREATE INDEX "tickets_assigneeId_idx" ON "tickets"("assigneeId");
+
+-- CreateIndex
+CREATE INDEX "tickets_slaBreached_idx" ON "tickets"("slaBreached");
 
 -- CreateIndex
 CREATE INDEX "comments_ticketId_idx" ON "comments"("ticketId");
@@ -83,10 +95,10 @@ CREATE INDEX "ticket_timeline_ticketId_idx" ON "ticket_timeline"("ticketId");
 CREATE UNIQUE INDEX "idempotency_keys_key_key" ON "idempotency_keys"("key");
 
 -- AddForeignKey
-ALTER TABLE "tickets" ADD CONSTRAINT "tickets_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "tickets" ADD CONSTRAINT "tickets_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tickets" ADD CONSTRAINT "tickets_assignedTo_fkey" FOREIGN KEY ("assignedTo") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "tickets" ADD CONSTRAINT "tickets_assigneeId_fkey" FOREIGN KEY ("assigneeId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "comments" ADD CONSTRAINT "comments_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "tickets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
