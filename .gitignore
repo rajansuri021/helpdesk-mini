@@ -13,6 +13,10 @@ build/
 .env.local
 .env.production
 
+# Credentials (local reference only)
+CREDENTIALS.local.md
+*.local.md
+
 # IDE
 .vscode/
 .idea/
