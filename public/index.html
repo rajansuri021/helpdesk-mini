@@ -646,6 +646,10 @@
                     token = data.token;
                     currentUser = data.user;
                     
+                    // Save to localStorage
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
                     document.getElementById('user-name').textContent = data.user.name;
                     document.getElementById('user-role').textContent = data.user.role;
                     document.getElementById('auth-section').classList.add('hidden');
@@ -720,6 +724,11 @@
         function logout() {
             token = null;
             currentUser = null;
+            
+            // Clear localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('user-info').classList.add('hidden');
             document.getElementById('main-content').classList.add('hidden');
