@@ -36,9 +36,10 @@ CREATE TABLE "tickets" (
 CREATE TABLE "comments" (
     "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "ticketId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "ticketId" TEXT NOT NULL,
+    "authorId" TEXT NOT NULL,
 
     CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
@@ -46,11 +47,13 @@ CREATE TABLE "comments" (
 -- CreateTable
 CREATE TABLE "ticket_timeline" (
     "id" TEXT NOT NULL,
-    "ticketId" TEXT NOT NULL,
     "action" TEXT NOT NULL,
-    "details" TEXT,
-    "userId" TEXT,
+    "oldValue" TEXT,
+    "newValue" TEXT,
+    "metadata" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "ticketId" TEXT NOT NULL,
+    "userId" TEXT,
 
     CONSTRAINT "ticket_timeline_pkey" PRIMARY KEY ("id")
 );
@@ -59,7 +62,9 @@ CREATE TABLE "ticket_timeline" (
 CREATE TABLE "idempotency_keys" (
     "id" TEXT NOT NULL,
     "key" TEXT NOT NULL,
+    "response" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "idempotency_keys_pkey" PRIMARY KEY ("id")
 );
@@ -86,13 +91,19 @@ CREATE INDEX "tickets_slaBreached_idx" ON "tickets"("slaBreached");
 CREATE INDEX "comments_ticketId_idx" ON "comments"("ticketId");
 
 -- CreateIndex
-CREATE INDEX "comments_userId_idx" ON "comments"("userId");
+CREATE INDEX "comments_createdAt_idx" ON "comments"("createdAt");
 
 -- CreateIndex
 CREATE INDEX "ticket_timeline_ticketId_idx" ON "ticket_timeline"("ticketId");
 
 -- CreateIndex
+CREATE INDEX "ticket_timeline_createdAt_idx" ON "ticket_timeline"("createdAt");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "idempotency_keys_key_key" ON "idempotency_keys"("key");
+
+-- CreateIndex
+CREATE INDEX "idempotency_keys_expiresAt_idx" ON "idempotency_keys"("expiresAt");
 
 -- AddForeignKey
 ALTER TABLE "tickets" ADD CONSTRAINT "tickets_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -104,7 +115,7 @@ ALTER TABLE "tickets" ADD CONSTRAINT "tickets_assigneeId_fkey" FOREIGN KEY ("ass
 ALTER TABLE "comments" ADD CONSTRAINT "comments_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "tickets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD CONSTRAINT "comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "comments" ADD CONSTRAINT "comments_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ticket_timeline" ADD CONSTRAINT "ticket_timeline_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "tickets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
