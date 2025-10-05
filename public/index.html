@@ -252,6 +252,19 @@
                     <h2 class="text-2xl font-bold gradient-text mb-6 flex items-center gap-2">
                         <span>🔐</span> Welcome Back
                     </h2>
+                    
+                    <!-- Quick Login Selector -->
+                    <div class="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border-2 border-blue-200">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700">🎭 Quick Login As:</label>
+                        <select id="role-selector" onchange="fillLoginCredentials()" 
+                                class="w-full px-5 py-3 border-2 border-blue-300 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white font-semibold">
+                            <option value="">-- Select a Role --</option>
+                            <option value="admin">👑 Admin (Full Control)</option>
+                            <option value="agent">🎧 Agent (Support Team)</option>
+                            <option value="user">👤 User (Customer)</option>
+                        </select>
+                    </div>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="md:col-span-1">
                             <label class="block text-sm font-semibold mb-3 text-gray-700">📧 Email Address</label>
@@ -642,6 +655,35 @@
         
         function clearLog() {
             document.getElementById('response-log').innerHTML = '<p class="text-gray-500">Log cleared. API responses will appear here...</p>';
+        }
+
+        function fillLoginCredentials() {
+            const roleSelector = document.getElementById('role-selector');
+            const emailField = document.getElementById('login-email');
+            const passwordField = document.getElementById('login-password');
+            
+            const credentials = {
+                'admin': { email: 'admin@mail.com', password: 'admin123' },
+                'agent': { email: 'agent1@helpdesk.com', password: 'agent123' },
+                'user': { email: 'user1@example.com', password: 'user123' }
+            };
+            
+            const selected = roleSelector.value;
+            if (selected && credentials[selected]) {
+                emailField.value = credentials[selected].email;
+                passwordField.value = credentials[selected].password;
+                
+                // Add a subtle animation
+                emailField.classList.add('ring-2', 'ring-green-300');
+                passwordField.classList.add('ring-2', 'ring-green-300');
+                setTimeout(() => {
+                    emailField.classList.remove('ring-2', 'ring-green-300');
+                    passwordField.classList.remove('ring-2', 'ring-green-300');
+                }, 1000);
+            } else {
+                emailField.value = '';
+                passwordField.value = '';
+            }
         }
 
         async function login() {
