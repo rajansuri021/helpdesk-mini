@@ -15,10 +15,10 @@ async function seed() {
     const userPassword = await bcrypt.hash('user123', 10);
 
     const admin = await prisma.user.upsert({
-      where: { email: 'admin@helpdesk.com' },
+      where: { email: 'admin@mail.com' },
       update: {},
       create: {
-        email: 'admin@helpdesk.com',
+        email: 'admin@mail.com',
         password: adminPassword,
         name: 'Admin User',
         role: 'ADMIN'
